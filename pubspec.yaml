@@ -1,0 +1,38 @@
+name: to_do_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  get: ^4.6.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - lib/assets/logo/logo.png
+    - lib/assets/logo/
+    - lib/assets/
+
+  fonts:
+    - family: Graphik
+      fonts:
+        - asset: lib/assets/fonts/Graphik-Regular.otf
+          weight: 400
+        - asset: lib/assets/fonts/Graphik-Semibold.otf
+          weight: 500
+        - asset: lib/assets/fonts/Graphik-Medium.otf
+          weight: 600
