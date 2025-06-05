@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
+class TaskAppBar extends StatefulWidget implements PreferredSizeWidget {
   const TaskAppBar({super.key});
+
+  @override
+  State<TaskAppBar> createState() => _TaskAppBarState();
+
+  @override
+  Size get preferredSize => Size.fromHeight(60.0);
+}
+
+class _TaskAppBarState extends State<TaskAppBar> {
+  bool pinned = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,29 +33,44 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
                   size: 30,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(right: 20),
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Color(0xff000000),
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Row(
-                  children: const [
-                    Icon(Icons.push_pin_outlined, size: 14),
-                    SizedBox(width: 5),
-                    Text(
-                      "Pin",
-                      style: TextStyle(
-                        fontFamily: "Graphik",
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                      ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    pinned = !pinned;
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 20),
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xff000000),
                     ),
-                    SizedBox(width: 5),
-                  ],
+                    borderRadius: BorderRadius.circular(5),
+                    color: (pinned) ? Colors.black : Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      (pinned)
+                          ? Icon(
+                              Icons.push_pin_outlined,
+                              size: 14,
+                              color: Colors.white,
+                            )
+                          : Icon(Icons.push_pin_outlined, size: 14),
+                      SizedBox(width: 5),
+                      Text(
+                        (pinned) ? "Pinned" : "Pin",
+                        style: TextStyle(
+                          fontFamily: "Graphik",
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: (pinned) ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -54,7 +79,4 @@ class TaskAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(60.0);
 }

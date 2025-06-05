@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/widgets/app_bar_task.dart';
 
-class NewTaskScreen extends StatefulWidget {
-  const NewTaskScreen({super.key});
+class TaskScreen extends StatefulWidget {
+  const TaskScreen({super.key});
   @override
-  State<NewTaskScreen> createState() => _NewTaskScreen();
+  State<TaskScreen> createState() => _NewTaskScreen();
 }
 
-class _NewTaskScreen extends State<NewTaskScreen> {
+class _NewTaskScreen extends State<TaskScreen> {
   List<bool> selections = [true, false, false, false];
   List<Widget> categories = [
     Padding(
@@ -77,8 +77,25 @@ class _NewTaskScreen extends State<NewTaskScreen> {
           ],
         ),
       ),
-      body: ListView(
-        children: const [],
+      body: Padding(
+        padding: const EdgeInsets.only(
+          top: 8.0,
+          left: 20.0,
+          right: 20.0,
+          bottom: 30.0,
+        ),
+        child: ListView(
+          children: const [
+            Text(
+              "Title",
+              style: TextStyle(
+                fontFamily: "Graphik",
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

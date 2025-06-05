@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:to_do_app/screens/new_task_screen.dart";
+import "package:to_do_app/screens/task_screen.dart";
 import "package:to_do_app/widgets/app_bar.dart";
 import "package:to_do_app/widgets/task_slice.dart";
 import "package:get/get.dart";
@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
       appBar: DefaultAppBar(title: "Dooit"),
       backgroundColor: Color(0xffFFFFFF),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.to(() => NewTaskScreen()),
+        onPressed: () => Get.to(() => TaskScreen()),
         backgroundColor: Color(0xff000000),
         foregroundColor: Color(0xffFFFFFF),
         shape: CircleBorder(),
