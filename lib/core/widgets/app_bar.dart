@@ -23,7 +23,8 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.025,
-                    child: Image.asset("lib/assets/logo/2x/white_logo.png"),
+                    child:
+                        Image.asset("lib/data/assets/logo/2x/white_logo.png"),
                   ),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.04),
                   Text(

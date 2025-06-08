@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_do_app/screens/welcome_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/core/screens/welcome_screen.dart';
+import 'package:to_do_app/data/controllers/TaskController.dart';
 
 void main() {
   runApp(
-    GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WelcomeScreen(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TaskController()),
+        // можно добавить другие провайдеры
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: WelcomeScreen(),
+      ),
     ),
   );
 }

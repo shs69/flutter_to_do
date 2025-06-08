@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_do_app/screens/main_screen.dart';
+import 'package:to_do_app/core/screens/main_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -20,7 +20,7 @@ class WelcomeScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.2,
                 ),
                 SizedBox(
-                  child: Image.asset("lib/assets/logo/logo.png"),
+                  child: Image.asset("lib/data/assets/logo/logo.png"),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.04,
