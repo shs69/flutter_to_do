@@ -30,4 +30,10 @@ class TaskController extends ChangeNotifier{
     saveTasks();
     notifyListeners();
   }
+
+  void deleteTask(int taskId){
+    _tasks.removeWhere((task) => task.id == taskId);
+    saveTasks();
+    notifyListeners();
+  }
 }

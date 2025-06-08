@@ -3,7 +3,7 @@ import "package:provider/provider.dart";
 import "package:to_do_app/core/screens/task_screen.dart";
 import "package:to_do_app/core/widgets/app_bar.dart";
 import "package:to_do_app/core/widgets/task_slice.dart";
-import "package:to_do_app/data/controllers/TaskController.dart";
+import "package:to_do_app/data/controllers/task_controller.dart";
 import "package:to_do_app/data/models/task_model.dart";
 import "package:get/get.dart";
 
@@ -49,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
         scrollDirection: Axis.vertical,
         children: tasks.map((task) {
           return TaskSlice(
+            id: task.id,
             name: task.title,
             date: task.createdAt,
             pinned: task.pinned,
