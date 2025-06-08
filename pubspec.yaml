@@ -12,6 +12,8 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   get: ^4.6.6
+  shared_preferences: ^2.5.3
+  provider: ^6.1.5
 
 dev_dependencies:
   flutter_test:
@@ -23,16 +25,16 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/logo/logo.png
-    - lib/assets/logo/
-    - lib/assets/
+    - lib/data/assets/logo/logo.png
+    - lib/data/assets/logo/
+    - lib/data/assets/
 
   fonts:
     - family: Graphik
       fonts:
-        - asset: lib/assets/fonts/Graphik-Regular.otf
+        - asset: lib/data/assets/fonts/Graphik-Regular.otf
           weight: 400
-        - asset: lib/assets/fonts/Graphik-Semibold.otf
+        - asset: lib/data/assets/fonts/Graphik-Semibold.otf
           weight: 500
-        - asset: lib/assets/fonts/Graphik-Medium.otf
+        - asset: lib/data/assets/fonts/Graphik-Medium.otf
           weight: 600
