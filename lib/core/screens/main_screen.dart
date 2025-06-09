@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask( () {
+    Future.microtask(() {
       if (mounted) {
         final controller = Provider.of<TaskController>(context, listen: false);
         controller.loadTasks();
@@ -37,8 +37,9 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Color(0xffFFFFFF),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Get.to(() => TaskScreen(title: "Task Name", category: "work"));
-          context.read<TaskController>().addTask(title: "Task Name");
+          int id = context.read<TaskController>().addTask(title: "Task Name");
+          Get.to(
+              () => TaskScreen(id: id, title: "Task Name", category: "work"));
         },
         backgroundColor: Color(0xff000000),
         foregroundColor: Color(0xffFFFFFF),

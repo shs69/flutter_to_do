@@ -16,7 +16,7 @@ class TaskSlice extends StatefulWidget {
 
   final int id;
   final String name;
-  final DateTime date;
+  final String date;
   final bool pinned;
   final String category;
 
@@ -46,7 +46,7 @@ class _TaskSliceState extends State<TaskSlice> {
         },
         child: GestureDetector(
           onTap: () {
-            Get.to(() => TaskScreen(title: widget.name, category: widget.category));
+            Get.to(() => TaskScreen(id: widget.id, title: widget.name, category: widget.category));
           },
           child: Container(
             height: MediaQuery.of(context).size.height * 0.125,
@@ -96,7 +96,7 @@ class _TaskSliceState extends State<TaskSlice> {
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.013),
                       Text(
-                        widget.date.toString(),
+                        widget.date,
                         style: TextStyle(
                           color: Color(0xff000000),
                           fontFamily: "Graphik",

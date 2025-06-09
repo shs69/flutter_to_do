@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_app/core/widgets/app_bar_task.dart';
+import 'package:to_do_app/core/widgets/editable_task_title.dart';
+import 'package:to_do_app/data/controllers/task_controller.dart';
 
 class TaskScreen extends StatefulWidget {
+  final int id;
   final String title;
   final String category;
 
   TaskScreen({
     super.key,
+    required this.id,
     required this.title,
     required this.category,
   });
@@ -48,6 +53,8 @@ class _NewTaskScreen extends State<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<TaskController>();
+
     return Scaffold(
       appBar: TaskAppBar(),
       backgroundColor: Color(0xffFFFFFF),
@@ -107,13 +114,11 @@ class _NewTaskScreen extends State<TaskScreen> {
         ),
         child: ListView(
           children: [
-            Text(
-              widget.title,
-              style: TextStyle(
-                fontFamily: "Graphik",
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-              ),
+            EditableTaskTitle(
+              onChanged: (newTitle) {
+               controller.changeTitle(widget.id, newTitle);
+              },
+              initialTitle: widget.title,
             ),
           ],
         ),

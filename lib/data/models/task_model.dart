@@ -2,16 +2,23 @@ class Task {
   final int id;
   String title;
   String category;
-  DateTime createdAt;
+  String createdAt;
   bool pinned;
 
   Task({
     required this.id,
     required this.title,
     this.category = "Work",
-    DateTime? createdAt,
+    String? createdAt,
     this.pinned = false,
-  }) : createdAt = createdAt ?? DateTime.now();
+  }) : createdAt = createdAt ??
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              DateTime.now().hour,
+              DateTime.now().second,
+            ).toString().substring(0, 16);
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
         id: json["id"],
