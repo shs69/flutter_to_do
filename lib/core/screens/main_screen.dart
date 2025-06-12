@@ -31,6 +31,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final tasks = context.watch<TaskController>().tasks;
+    tasks.sort((a, b) {
+      if (a.pinned == b.pinned) return 0;
+      return a.pinned ? -1 : 1;
+    });
 
     return Scaffold(
       appBar: DefaultAppBar(title: "Dooit"),
@@ -38,8 +42,8 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           int id = context.read<TaskController>().addTask(title: "Task Name");
-          Get.to(
-              () => TaskScreen(id: id, title: "Task Name", category: "work"));
+          Get.to(() => TaskScreen(
+              id: id, title: "Task Name", category: "work", pinned: false));
         },
         backgroundColor: Color(0xff000000),
         foregroundColor: Color(0xffFFFFFF),

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_app/data/controllers/task_controller.dart';
+import 'package:provider/provider.dart';
 
 class TaskAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const TaskAppBar({super.key});
+  final int id;
+  final bool pinned;
+  const TaskAppBar({super.key, required this.id, required this.pinned});
 
   @override
   State<TaskAppBar> createState() => _TaskAppBarState();
@@ -12,10 +16,18 @@ class TaskAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _TaskAppBarState extends State<TaskAppBar> {
-  bool pinned = false;
+  late bool pinned;
+
+  @override
+  void initState() {
+    super.initState();
+    pinned = widget.pinned;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<TaskController>();
+
     return Container(
       decoration: BoxDecoration(
         color: Color(0xffFFFFFF),
@@ -37,6 +49,7 @@ class _TaskAppBarState extends State<TaskAppBar> {
                 onTap: () {
                   setState(() {
                     pinned = !pinned;
+                    controller.togglePinned(widget.id, pinned);
                   });
                 },
                 child: Container(

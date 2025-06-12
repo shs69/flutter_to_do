@@ -8,12 +8,14 @@ class TaskScreen extends StatefulWidget {
   final int id;
   final String title;
   final String category;
+  final bool pinned;
 
-  TaskScreen({
+  const TaskScreen({
     super.key,
     required this.id,
     required this.title,
     required this.category,
+    required this.pinned,
   });
 
   @override
@@ -56,7 +58,7 @@ class _NewTaskScreen extends State<TaskScreen> {
     final controller = context.read<TaskController>();
 
     return Scaffold(
-      appBar: TaskAppBar(),
+      appBar: TaskAppBar(id: widget.id, pinned: widget.pinned),
       backgroundColor: Color(0xffFFFFFF),
       bottomNavigationBar: BottomAppBar(
         height: 150.0,
@@ -94,6 +96,7 @@ class _NewTaskScreen extends State<TaskScreen> {
                         selections[i] = i == index;
                         if (selections[i]) {
                           category = cat2sel[i];
+                          controller.changeCategory(widget.id, category);
                         }
                       }
                     });
@@ -116,7 +119,7 @@ class _NewTaskScreen extends State<TaskScreen> {
           children: [
             EditableTaskTitle(
               onChanged: (newTitle) {
-               controller.changeTitle(widget.id, newTitle);
+                controller.changeTitle(widget.id, newTitle);
               },
               initialTitle: widget.title,
             ),

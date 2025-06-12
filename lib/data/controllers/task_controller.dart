@@ -5,7 +5,7 @@ import "package:flutter/material.dart";
 class TaskController extends ChangeNotifier {
   List<Task> _tasks = [];
 
-  List<Task> get tasks => List.unmodifiable(_tasks);
+  List<Task> get tasks => _tasks;
 
   Future<void> loadTasks() async {
     final loadedTasks = await TaskStorage.loadTasks();
@@ -51,6 +51,16 @@ class TaskController extends ChangeNotifier {
     for (var task in _tasks) {
       if (task.id == taskId) {
         task.category = newCategory.toLowerCase().replaceAll(" ", "");
+      }
+    }
+    saveTasks();
+    notifyListeners();
+  }
+
+  void togglePinned(int taskId, bool pinned){
+    for (var task in _tasks) {
+      if (task.id == taskId){
+        task.pinned = pinned;
       }
     }
     saveTasks();

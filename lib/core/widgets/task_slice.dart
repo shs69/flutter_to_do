@@ -46,7 +46,12 @@ class _TaskSliceState extends State<TaskSlice> {
         },
         child: GestureDetector(
           onTap: () {
-            Get.to(() => TaskScreen(id: widget.id, title: widget.name, category: widget.category));
+            Get.to(() => TaskScreen(
+                  id: widget.id,
+                  title: widget.name,
+                  category: widget.category,
+                  pinned: widget.pinned,
+                ));
           },
           child: Container(
             height: MediaQuery.of(context).size.height * 0.125,
@@ -58,13 +63,16 @@ class _TaskSliceState extends State<TaskSlice> {
                   : Border(),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     widget.name,
+                    overflow: TextOverflow.ellipsis,
+                    // maxLines: 1,
                     style: TextStyle(
                       fontFamily: "Graphik",
                       fontSize: 20,
@@ -89,12 +97,14 @@ class _TaskSliceState extends State<TaskSlice> {
                           ),
                         ),
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.045),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.045),
                       Icon(
                         Icons.calendar_today,
                         size: 20,
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.013),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.013),
                       Text(
                         widget.date,
                         style: TextStyle(

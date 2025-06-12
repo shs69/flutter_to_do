@@ -1,3 +1,4 @@
 {
-    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
+    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 14
 }
