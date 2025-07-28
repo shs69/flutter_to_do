@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/core/widgets/app_bar_task.dart';
 import 'package:to_do_app/core/widgets/editable_task_title.dart';
+import 'package:to_do_app/core/widgets/task_view.dart';
 import 'package:to_do_app/data/controllers/task_controller.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -55,7 +57,17 @@ class _NewTaskScreen extends State<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<TaskController>();
+    final controller = context.watch<TaskController>();
+    final affairs =
+        controller.tasks.firstWhere((task) => task.id == widget.id).taskList;
+
+    void onReorder(int oldIndex, int newIndex) {
+      setState(() {
+        if (newIndex > oldIndex) newIndex -= 1;
+        final item = affairs.removeAt(oldIndex);
+        affairs.insert(newIndex, item);
+      });
+    }
 
     return Scaffold(
       appBar: TaskAppBar(id: widget.id, pinned: widget.pinned),
@@ -113,15 +125,34 @@ class _NewTaskScreen extends State<TaskScreen> {
           top: 8.0,
           left: 20.0,
           right: 20.0,
-          bottom: 30.0,
         ),
-        child: ListView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             EditableTaskTitle(
               onChanged: (newTitle) {
                 controller.changeTitle(widget.id, newTitle);
               },
               initialTitle: widget.title,
+            ),
+            Expanded(
+              child: ReorderableListView(
+                onReorder: onReorder,
+                children: [
+                  for (int i = 0; i < affairs.length; i++)
+                    ReorderableDragStartListener(
+                      index: i,
+                      key: ValueKey(affairs[i]),
+                      child: TaskView(
+                        isDone: affairs[i][1],
+                        taskId: widget.id,
+                        initialValue: affairs[i][0],
+                        affairIndex: i,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ],
         ),

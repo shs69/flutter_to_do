@@ -8,23 +8,39 @@ class TaskController extends ChangeNotifier {
   List<Task> get tasks => _tasks;
 
   Future<void> loadTasks() async {
+    // TaskStorage.printAllPrefs();
     final loadedTasks = await TaskStorage.loadTasks();
     _tasks = loadedTasks;
+    sortTasks();
     notifyListeners();
   }
 
   Future<void> saveTasks() async {
+    sortTasks();
     await TaskStorage.saveTasks(_tasks);
     notifyListeners();
+  }
+
+  void sortTasks() {
+    _tasks.sort((a, b) {
+      if (a.pinned != b.pinned) {
+        return a.pinned ? -1 : 1;
+      }
+      return DateTime.parse(b.createdAt).compareTo(DateTime.parse(a.createdAt));
+    });
   }
 
   int addTask(
       {String title = '', String category = 'work', bool pinned = false}) {
     Task newTask = Task(
-        id: DateTime.now().millisecondsSinceEpoch,
-        title: title,
-        category: category,
-        pinned: pinned);
+      id: DateTime.now().millisecondsSinceEpoch,
+      title: title,
+      category: category,
+      pinned: pinned,
+      taskList: [
+        ["To-do", false]
+      ],
+    );
     _tasks.add(newTask);
     saveTasks();
     notifyListeners();
@@ -57,11 +73,48 @@ class TaskController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void togglePinned(int taskId, bool pinned){
+  void togglePinned(int taskId, bool pinned) {
     for (var task in _tasks) {
-      if (task.id == taskId){
+      if (task.id == taskId) {
         task.pinned = pinned;
       }
+    }
+    saveTasks();
+    notifyListeners();
+  }
+
+  List getAffair(int taskId) {
+    Task task = tasks.firstWhere((task) => task.id == taskId);
+    return task.taskList;
+  }
+
+  void addOrChangeAffair(int taskId, String affairText, int affairIndex) {
+    final affairs = getAffair(taskId);
+    final rightAffair = affairs.elementAtOrNull(affairIndex);
+
+    if (rightAffair == null) {
+      affairs.add([affairText, false]);
+    } else {
+      affairs[affairIndex] = [affairText, false];
+    }
+    saveTasks();
+    notifyListeners();
+  }
+
+  bool checkEmptyAffair(int taskId) {
+    Task task = _tasks.firstWhere((task) => task.id == taskId);
+    for (final affair in task.taskList) {
+      if (affair[0] == "To-do") return true;
+    }
+    return false;
+  }
+
+  void toggleAffairDone(int taskId, int affairIndex, bool isDone) {
+    final affairsList = getAffair(taskId);
+    final rightAffair = affairsList.elementAtOrNull(affairIndex);
+
+    if (rightAffair != null) {
+      affairsList[affairIndex][1] = isDone;
     }
     saveTasks();
     notifyListeners();

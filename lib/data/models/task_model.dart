@@ -4,10 +4,12 @@ class Task {
   String category;
   String createdAt;
   bool pinned;
+  List taskList;
 
   Task({
     required this.id,
     required this.title,
+    required this.taskList,
     this.category = "Work",
     String? createdAt,
     this.pinned = false,
@@ -17,7 +19,7 @@ class Task {
               DateTime.now().month,
               DateTime.now().day,
               DateTime.now().hour,
-              DateTime.now().second,
+              DateTime.now().minute,
             ).toString().substring(0, 16);
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
@@ -26,6 +28,7 @@ class Task {
         category: json["category"],
         createdAt: json["created_at"],
         pinned: json["pinned"],
+        taskList: json["task_list"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,5 +37,6 @@ class Task {
         "category": category,
         "createdAt": createdAt.toString(),
         "pinned": pinned,
+        "task_list": taskList,
       };
 }
