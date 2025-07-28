@@ -3,8 +3,19 @@ import 'package:flutter/material.dart';
 class EditableTaskTitle extends StatefulWidget {
   final String initialTitle;
   final ValueChanged<String> onChanged;
+  final TextStyle fontStyle;
 
-  const EditableTaskTitle({super.key, required this.onChanged, required this.initialTitle});
+  const EditableTaskTitle({
+    super.key,
+    required this.onChanged,
+    required this.initialTitle,
+    TextStyle? fontStyle,
+  }) : fontStyle = fontStyle ??
+            const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 24.0,
+              fontFamily: "Graphik",
+            );
 
   @override
   State<EditableTaskTitle> createState() => _EditableTaskTitleState();
@@ -12,12 +23,14 @@ class EditableTaskTitle extends StatefulWidget {
 
 class _EditableTaskTitleState extends State<EditableTaskTitle> {
   bool _isEditing = false;
+  late TextStyle fontStyle;
   late TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.initialTitle);
+    fontStyle = widget.fontStyle;
   }
 
   void _save() {
@@ -51,14 +64,9 @@ class _EditableTaskTitleState extends State<EditableTaskTitle> {
         },
         child: Text(
           _controller.text,
-          style: TextStyle(
-            fontFamily: "Graphik",
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-          ),
+          style: fontStyle,
         ),
       );
     }
   }
 }
-

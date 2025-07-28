@@ -6,6 +6,7 @@ import "package:to_do_app/core/widgets/task_slice.dart";
 import "package:to_do_app/data/controllers/task_controller.dart";
 import "package:to_do_app/data/models/task_model.dart";
 import "package:get/get.dart";
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,21 +21,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      if (mounted) {
-        final controller = Provider.of<TaskController>(context, listen: false);
-        controller.loadTasks();
-      }
-    });
+    context.read<TaskController>().loadTasks();
   }
 
   @override
   Widget build(BuildContext context) {
     final tasks = context.watch<TaskController>().tasks;
-    tasks.sort((a, b) {
-      if (a.pinned == b.pinned) return 0;
-      return a.pinned ? -1 : 1;
-    });
 
     return Scaffold(
       appBar: DefaultAppBar(title: "Dooit"),
@@ -50,18 +42,39 @@ class _MainScreenState extends State<MainScreen> {
         shape: CircleBorder(),
         child: Icon(Icons.add),
       ),
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        children: tasks.map((task) {
-          return TaskSlice(
-            id: task.id,
-            name: task.title,
-            date: task.createdAt,
-            pinned: task.pinned,
-            category: task.category,
-          );
-        }).toList(),
-      ),
+      body: tasks.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 90,
+                children: [
+                  SvgPicture.asset(
+                    "lib/data/assets/logo/woman.svg",
+                  ),
+                  Text(
+                    "Create your first to-do list...",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20.0,
+                      fontFamily: "Graphik",
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView(
+              scrollDirection: Axis.vertical,
+              children: tasks.map((task) {
+                return TaskSlice(
+                  id: task.id,
+                  name: task.title,
+                  date: task.createdAt,
+                  pinned: task.pinned,
+                  category: task.category,
+                );
+              }).toList(),
+            ),
     );
   }
 }

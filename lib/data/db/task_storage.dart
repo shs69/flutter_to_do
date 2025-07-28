@@ -19,4 +19,12 @@ class TaskStorage {
     final List decoded = jsonDecode(jsonString);
     return decoded.map((json) => Task.fromJson(json)).toList();
   }
+
+  // static void printAllPrefs() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   print('All keys: ${prefs.getKeys()}');
+  //   prefs.getKeys().forEach((key) {
+  //     print('$key: ${prefs.get(key)}');
+  //   });
+  // }
 }
