@@ -12,6 +12,7 @@ class TaskSlice extends StatefulWidget {
     required this.date,
     required this.pinned,
     required this.category,
+    required this.color,
   });
 
   final int id;
@@ -19,6 +20,7 @@ class TaskSlice extends StatefulWidget {
   final String date;
   final bool pinned;
   final String category;
+  final Color color;
 
   @override
   State<TaskSlice> createState() => _TaskSliceState();
@@ -55,7 +57,7 @@ class _TaskSliceState extends State<TaskSlice> {
           },
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: Color(0xffFFF6E7),
+              color: widget.color,
               borderRadius: BorderRadius.circular(16),
               border: widget.pinned
                   ? Border.all(color: Color(0xff000000))

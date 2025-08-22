@@ -28,15 +28,16 @@ class _TaskAppBarState extends State<TaskAppBar> {
       ),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10.0),
+          padding: EdgeInsets.only(right: 24.0, left: 24.0, top: 24.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(
-                onPressed: () => Get.back(),
-                icon: Icon(
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Icon(
                   Icons.arrow_back,
-                  size: 30,
+                  color: Colors.black,
                 ),
               ),
               GestureDetector(

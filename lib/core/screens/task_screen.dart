@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/core/widgets/app_bar_task.dart';
 import 'package:to_do_app/core/widgets/editable_task_title.dart';
@@ -63,6 +62,11 @@ class _NewTaskScreen extends State<TaskScreen> {
 
     void onReorder(int oldIndex, int newIndex) {
       setState(() {
+        if (affairs[oldIndex][0] == "To-do") {
+          final item = affairs.removeAt(oldIndex);
+          affairs.insert(affairs.length, item);
+          return;
+        }
         if (newIndex > oldIndex) newIndex -= 1;
         final item = affairs.removeAt(oldIndex);
         affairs.insert(newIndex, item);
@@ -122,23 +126,40 @@ class _NewTaskScreen extends State<TaskScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 8.0,
-          left: 20.0,
+          left: 24.0,
           right: 20.0,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            EditableTaskTitle(
-              onChanged: (newTitle) {
-                controller.changeTitle(widget.id, newTitle);
-              },
-              initialTitle: widget.title,
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 26.0, bottom: 12.0, left: 4.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: EditableTaskTitle(
+                      onChanged: (newTitle) {
+                        controller.changeTitle(widget.id, newTitle);
+                      },
+                      initialTitle: widget.title,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: ReorderableListView(
                 onReorder: onReorder,
+                proxyDecorator: (child, index, animation) {
+                  return Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    elevation: 2,
+                    child: child,
+                  );
+                },
                 children: [
                   for (int i = 0; i < affairs.length; i++)
                     ReorderableDragStartListener(

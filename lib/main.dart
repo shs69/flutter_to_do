@@ -9,7 +9,6 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TaskController()),
-        // можно добавить другие провайдеры
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

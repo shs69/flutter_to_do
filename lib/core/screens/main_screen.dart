@@ -27,6 +27,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final tasks = context.watch<TaskController>().tasks;
+    Map<String, Color> colors = {
+      "work": Color(0xffFFF6E7),
+      "personal": Color(0xffEDBBB4),
+      "finance": Color(0xffF3E4F6),
+      "other": Color(0xffE5FFE6)
+    };
 
     return Scaffold(
       appBar: DefaultAppBar(title: "Dooit"),
@@ -72,6 +78,7 @@ class _MainScreenState extends State<MainScreen> {
                   date: task.createdAt,
                   pinned: task.pinned,
                   category: task.category,
+                  color: colors[task.category] ?? Color(0xffFFF6E7),
                 );
               }).toList(),
             ),

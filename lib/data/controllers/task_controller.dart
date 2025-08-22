@@ -119,4 +119,17 @@ class TaskController extends ChangeNotifier {
     saveTasks();
     notifyListeners();
   }
+
+  void deleteAffair(int taskId, int affairIndex) {
+    _tasks
+        .firstWhere((task) => task.id == taskId)
+        .taskList
+        .removeAt(affairIndex);
+    saveTasks();
+    notifyListeners();
+  }
+
+  List<Task> search(String name) {
+    return _tasks.where((task) => task.title == name).toList();
+  }
 }
